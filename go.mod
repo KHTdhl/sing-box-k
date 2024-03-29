@@ -13,6 +13,7 @@ require (
 	github.com/go-chi/cors v1.2.1
 	github.com/go-chi/render v1.0.3
 	github.com/gofrs/uuid/v5 v5.0.0
+	github.com/hjson/hjson-go/v4 v4.4.0
 	github.com/insomniacslk/dhcp v0.0.0-20231206064809-8c70d406f6d2
 	github.com/libdns/alidns v1.0.3
 	github.com/libdns/cloudflare v0.1.0

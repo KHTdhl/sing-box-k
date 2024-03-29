@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/sagernet/sing-box/common/betterjson"
 	C "github.com/sagernet/sing-box/constant"
 	"github.com/sagernet/sing-box/option"
 	dns "github.com/sagernet/sing-dns"
@@ -14,10 +15,11 @@ func newParser(content string, dialerOptions *option.OverrideDialerOptions) ([]o
 	var outbounds []option.Outbound
 	var err error
 	switch true {
-	case strings.Contains(content, "\"outbounds\""):
+	case strings.Contains(content, "outbounds"):
 		var options option.OutboundProviderOptions
-		err = options.UnmarshalJSON([]byte(content))
-		if err != nil {
+		if parsedContent, err := betterjson.PreConvert([]byte(content)); err != nil {
+			return nil, E.Cause(err, "decode config at ")
+		} else if err := options.UnmarshalJSON(parsedContent); err != nil {
 			return nil, E.Cause(err, "decode config at ")
 		}
 		outbounds = options.Outbounds
